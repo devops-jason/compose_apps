@@ -3,7 +3,7 @@ version: '3'
 
 services:
   gitlab:
-    image: gitlab/gitlab-ce:latest
+    image: docker.io/gitlab/gitlab-ce:latest
     restart: always
     hostname: gitlab.jlmillerelectric.io
     ports:
@@ -16,12 +16,12 @@ services:
         letsencrypt['enable'] = false
         nginx['redirect_http_to_https'] = true
         nginx['ssl_certificate'] = '/etc/gitlab/ssl/gitlab.jlmillerelectric.io.crt'
-        nginx['ssl_certificate_key'] = '/etc/gitlab/ssl/gitlab.jlmillerelectric.io.key
+        nginx['ssl_certificate_key'] = '/etc/gitlab/ssl/gitlab.jlmillerelectric.io.key'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
     volumes:
-      - /data/gitlab/config:/etc/gitlab
-      - /data/gitlab/logs:/var/log/gitlab
-      - /data/gitlab/data:/var/opt/gitlab
+      - /srv/config:/etc/gitlab
+      - /srv/logs:/var/log/gitlab
+      - /srv//data:/var/opt/gitlab
       - ./ssl:/etc/gitlab/ssl
     networks:
       - gitlab-network
