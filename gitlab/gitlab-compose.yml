@@ -7,9 +7,9 @@ services:
     restart: always
     hostname: gitlab.jlmillerelectric.io
     ports:
-      - "192.168.1.21:80:80"      # Binding GitLab web port to IP 192.168.1.21:80
-      - "192.168.1.21:443:443"    # Binding GitLab web secure port to IP 192.168.1.21:443
-      - "192.168.1.21:2222:22"    # Binding GitLab SSH port to IP 192.168.1.21:2222
+      - "192.168.1.21:80:80"
+      - "192.168.1.21:443:443"    
+      - "192.168.1.21:2222:22"    
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.jlmillerelectric.io'
@@ -23,4 +23,10 @@ services:
       - /data/gitlab/logs:/var/log/gitlab
       - /data/gitlab/data:/var/opt/gitlab
       - ./ssl:/etc/gitlab/ssl
+    networks:
+      - gitlab-network
+
+networks:
+  gitlab-network:
+    driver: bridge
 
