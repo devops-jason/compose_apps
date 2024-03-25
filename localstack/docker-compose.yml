@@ -3,14 +3,17 @@ version: '3.8'
 
 services:
   localstack:
-    image: localstack/localstack
+    image: docker.io/localstack/localstack:latest
     container_name: localstack
     ports:
       # Expose ports for AWS services
-      - "4566-4599:4566-4599"
+      - "192.168.1.22:53:53"
+      - "192.168.1.22:443:443"
+      - "192.168.1.22:4510-4520:4510-4520"
+      - "192.168.1.22:4566-4620:4566-4620"
     env_file:
-      - path: ./localstack.env
-        required: true
+      - "./localstack.env"
     volumes:
       # Mount local directory for temporary files
-      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/srv/localstack:/tmp"
+      - "/var/run/docker.sock:/var/run/docker.sock"
