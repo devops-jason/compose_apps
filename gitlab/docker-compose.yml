@@ -1,0 +1,26 @@
+---
+version: '3'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    hostname: gitlab.jlmillerelectric.io
+    ports:
+      - "192.168.1.21:80:80"      # Binding GitLab web port to IP 192.168.1.21:80
+      - "192.168.1.21:443:443"    # Binding GitLab web secure port to IP 192.168.1.21:443
+      - "192.168.1.21:2222:22"    # Binding GitLab SSH port to IP 192.168.1.21:2222
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.jlmillerelectric.io'
+        letsencrypt['enable'] = false
+        nginx['redirect_http_to_https'] = true
+        nginx['ssl_certificate'] = '/etc/gitlab/ssl/gitlab.jlmillerelectric.io.crt'
+        nginx['ssl_certificate_key'] = '/etc/gitlab/ssl/gitlab.jlmillerelectric.io.key
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
+    volumes:
+      - /data/gitlab/config:/etc/gitlab
+      - /data/gitlab/logs:/var/log/gitlab
+      - /data/gitlab/data:/var/opt/gitlab
+      - ./ssl:/etc/gitlab/ssl
+
