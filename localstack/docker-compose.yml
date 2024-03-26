@@ -3,7 +3,7 @@ version: '3.8'
 
 services:
   localstack:
-    image: docker.io/localstack/localstack:latest
+    image: docker.io/localstack/localstack-pro:latest
     container_name: localstack
     ports:
       # Expose ports for AWS services
