@@ -19,9 +19,9 @@ services:
         nginx['ssl_certificate_key'] = '/etc/gitlab/ssl/gitlab.jlmillerelectric.io.key'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
     volumes:
-      - /data/gitlab/config:/etc/gitlab
-      - /data/gitlab/logs:/var/log/gitlab
-      - /data/gitlab/data:/var/opt/gitlab
+      - /service/gitlab/config:/etc/gitlab
+      - /service/gitlab/logs:/var/log/gitlab
+      - /service/gitlab/data:/var/opt/gitlab
       - ./ssl:/etc/gitlab/ssl
     networks:
       - gitlab-network
