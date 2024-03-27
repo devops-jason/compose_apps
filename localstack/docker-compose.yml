@@ -15,5 +15,5 @@ services:
       - "./localstack.env"
     volumes:
       # Mount local directory for temporary files
-      - "/data/localstack:/tmp"
+      - "/service/localstack:/tmp"
       - "/var/run/docker.sock:/var/run/docker.sock"
