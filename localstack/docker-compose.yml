@@ -10,11 +10,10 @@ services:
       - "192.168.1.22:53:53/tcp"
       - "192.168.1.22:53:53/udp"
       - "192.168.1.22:443:443"
-      - "192.168.1.22:4510-4520:4510-4520"
       - "192.168.1.22:4566-4620:4566-4620"
     env_file:
       - "./localstack.env"
     volumes:
       # Mount local directory for temporary files
-      - "/srv/localstack:/tmp"
+      - "/data/localstack:/tmp"
       - "/var/run/docker.sock:/var/run/docker.sock"
