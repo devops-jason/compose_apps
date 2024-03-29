@@ -14,7 +14,7 @@ services:
       - DB_PASS=bookstack@Pass
       - DB_DATABASE=bookstackapp
     volumes:
-      - /data/bookstack_app_data:/config
+      - /service/bookstack_app:/config
     ports:
       - 192.168.1.23:80:80
     restart: unless-stopped
@@ -32,5 +32,5 @@ services:
       - MYSQL_USER=bookstack
       - MYSQL_PASSWORD=bookstack@Pass
     volumes:
-      - /data/bookstack_db_data:/config
+      - /service/bookstack_db:/config
     restart: unless-stopped
