@@ -1,0 +1,71 @@
+version: '3.7'
+
+services:
+  sentry:
+    image: getsentry/sentry:latest
+    container_name: sentry
+    environment:
+      - SENTRY_SECRET_KEY=
+      - SENTRY_POSTGRES_HOST=postgres
+      - SENTRY_DB_USER=sentry
+      - SENTRY_DB_PASSWORD=sentry
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_REDIS_PORT=6379
+      - SENTRY_USE_BIG_INTS=true
+      - SENTRY_SINGLE_ORGANIZATION=false
+      - SENTRY_SYSTEM_MAX_EVENTS_PER_MINUTE=60
+      - SENTRY_WEB_HOST=0.0.0.0
+      - SENTRY_WEB_PORT=9000
+      - SENTRY_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+      - SENTRY_EMAIL_HOST=mini-2.jlmillerelectric.io
+      - SENTRY_EMAIL_PORT=25
+      - SENTRY_EMAIL_USE_TLS=false
+      - SENTRY_SERVER_EMAIL=sentry@jlmillerelectric.io
+      - SENTRY_EMAIL_FROM=sentry@jlmillerelectric.io
+      - SENTRY_SMTP_HOST=mini-2.jlmillerelectric.io
+      - SENTRY_SMTP_PORT=25
+      - SENTRY_SMTP_USE_TLS=false
+      - SENTRY_MEMCACHED_HOST=memcached
+      - SENTRY_MEMCACHED_PORT=11211
+    depends_on:
+      - postgres
+      - redis
+      - memcached
+    volumes:
+      - /service/sentry:/var/lib/sentry/files
+    ports:
+      - "192.168.1.20:9000:9000"
+    networks:
+      - sentry_net
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=sentry
+      - POSTGRES_PASSWORD=sentry
+      - POSTGRES_DB=sentry
+    volumes:
+      - /service/sentry_postgres:/var/lib/postgresql/data
+    networks:
+      - sentry_net
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    prts:
+      - "6379:6379"
+    networks:
+      - sentry_net
+
+  memcached:
+    image: memcached:latest
+    container_name: memcached
+    ports:
+      - "11211:11211"
+    networks:
+      - sentry_net
+
+networks:
+  sentry_net:
+    driver: bridge
